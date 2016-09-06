@@ -15,6 +15,8 @@ class TransparentWin (Tk.Tk) :
         print screen_width
         print screen_height
 
+        self.Drag = Drag(self)
+
         ''' Sets focus to the window. '''
         self.focus_force()
 
@@ -54,6 +56,45 @@ class TransparentWin (Tk.Tk) :
     def exit (self, event) :
         self.destroy()
 
+    def position (self) :
+
+        _filter = re.compile(r"(\d+)?x?(\d+)?([+-])(\d+)([+-])(\d+)")
+
+        pos = self.winfo_geometry()
+
+        filtered = _filter.search(pos)
+        self.X = int(filtered.group(4))
+        self.Y = int(filtered.group(6))
+
+        return self.X, self.Y
+
+class Drag:
+    ''' Makes a window dragable. '''
+
+    def __init__ (self, par, dissable=None, releasecmd=None) :
+
+        self.Par        = par
+        self.Dissable   = dissable
+
+        self.ReleaseCMD = releasecmd
+
+        self.Par.bind('<Button-1>', self.relative_position)
+        self.Par.bind('<ButtonRelease-1>', self.drag_unbind)
+
+
+    def relative_position (self, event) :
+
+        cx, cy = self.Par.winfo_pointerxy()
+        x, y = self.Par.position()
+
+        self.OriX = x
+        self.OriY = y
+
+        self.RelX = cx - x
+        self.RelY = cy - y
+
+        self.Par.bind('<Motion>', self.drag_wid)
+
     def drag_wid (self, event) :
 
         cx, cy = self.Par.winfo_pointerxy()
@@ -86,11 +127,11 @@ class TransparentWin (Tk.Tk) :
             self.ReleaseCMD()
 
 
-    # def dissable (self) :
-    #
-    #     self.Par.unbind('<Button-1>')
-    #     self.Par.unbind('<ButtonRelease-1>')
-    #     self.Par.unbind('<Motion>')
+    def dissable (self) :
+
+        self.Par.unbind('<Button-1>')
+        self.Par.unbind('<ButtonRelease-1>')
+        self.Par.unbind('<Motion>')
 
 
 def __run__ () :
