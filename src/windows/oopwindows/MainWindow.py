@@ -1,10 +1,7 @@
 import Tkinter as Tk, re
 
 
-
-
-class TransparentWin (Tk.Tk) :
-    ''' Transparent Tk Window Class '''
+class MainWindow(Tk.Tk):
 
     def __init__ (self) :
 
@@ -58,12 +55,3 @@ class TransparentWin (Tk.Tk) :
 
     def exit (self, event) :
         self.destroy()
-
-def __run__ () :
-
-    TransparentWin().mainloop()
-
-
-if __name__ == '__main__' :
-
-    __run__()
