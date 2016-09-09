@@ -1,6 +1,5 @@
 import Tkinter as Tk, re
-
-
+from MouseCoordinates import MouseCoordinates
 
 
 class TransparentWin (Tk.Tk) :
@@ -46,15 +45,16 @@ class TransparentWin (Tk.Tk) :
         self.Frame.pack()
 
         ''' Exits the application when the window is right clicked. '''
-        self.Frame.bind('<Motion>', self.mouse_coordinates)
+        # self.Frame.bind('<Motion>', self.get_mouse_position)
+        self.Frame.bind('<Motion>', MouseCoordinates.get_mouse_position())
         self.Frame.bind('<Button-3>', self.exit)
 
         ''' Changes the window's size indirectly. '''
         self.Frame.configure(width=screen_width, height=screen_height)
 
-    def mouse_coordinates(self, event):
-        x, y = event.x, event.y
-        print('{}, {}'.format(x, y))
+    # def get_mouse_position(self, event):
+    #     x, y = event.x, event.y
+    #     print('{}, {}'.format(x, y))
 
     def exit (self, event) :
         self.destroy()
