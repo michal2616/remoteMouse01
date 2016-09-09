@@ -1,12 +1,13 @@
 import MainWindow
 
 
-class StartMainWindows(MainWindow):
+class StartMainWindows():
 
-    def __run__ (MainWindow) :
-        jakis = MainWindow()
-        self.mainloop()
+    RunIt = MainWindow.MainWindow()
+
+def __run__ ():
+    StartMainWindows.RunIt.mainloop()
 
 
-    if __name__=='__main__':
-        __run__()
+if __name__=='__main__':
+    __run__()
