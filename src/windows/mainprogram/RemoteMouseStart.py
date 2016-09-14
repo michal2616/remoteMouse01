@@ -21,17 +21,7 @@ class TransparentWin (Tk.Tk) :
         self.wm_attributes("-topmost", True)
         self.attributes("-alpha", 0.2)
 
-        canvas= Tk.Canvas(self, width=100, height=100)
-        canvas.bind('<Motion>', self.get_mouse_position)
-        canvas.pack()
-
-
-        self.switcher = 0
-        if self.screen_width < 100:
-            self.switcher = 1
-
-        if self.switcher == 1:
-            self.create_transparent_widget()
+        self.create_transparent_widget()
 
     def get_mouse_position(self, event):
         pozycjax = self.winfo_pointerx()
