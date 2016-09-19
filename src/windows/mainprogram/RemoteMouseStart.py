@@ -39,10 +39,31 @@ class TransparentWin (Tk.Tk) :
         self.x_previous = 0
         self.y_previous = 0
         self.Frame.bind('<Motion>', lambda event: self.get_mouse_position_delta(event, self.x_previous, self.y_previous))
+        self.bind('<MouseWheel>', self.get_mouse_wheel_down)
+        self.Frame.bind('<Button-1>', self.get_mouse_left_click)
+        self.Frame.bind('<ButtonRelease-1>', self.get_mouse_left_released)
+        self.Frame.bind('<B1-Motion>', self.get_mouse_left_hold)
         self.Frame.bind('<Button-3>', self.exit)
+
 
         ''' Changes the window's size indirectly. '''
         self.Frame.configure(width=self.screen_width, height=self.screen_height)
+
+    def get_mouse_wheel_down(self, event):
+        # print event
+        if event.num == 5 or event.delta == -120:
+            print("Scroll down")
+        if event.num == 4 or event.delta == 120:
+            print("Scroll up")
+
+    def get_mouse_left_released(self, event):
+        print("Left mouse button was released")
+
+    def get_mouse_left_hold(self, event):
+        print("Left button is holded")
+
+    def get_mouse_left_click(self, event):
+        print("Left click")
 
     def get_mouse_position_delta(self, event, x_previous, y_previous):
         x, y = event.x, event.y
