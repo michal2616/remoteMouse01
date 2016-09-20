@@ -77,7 +77,7 @@ class TransparentWin (Tk.Tk) :
             p2 = Process(target=Waiter.Waiter().mainloop())
             p1.start()
             p2.start()
-            self.destroy()
+            # self.destroy()
         print('Parametr x: {}, Parameter y: {}'.format(self.xdelta, self.ydelta))
 
     def exit (self, event) :
