@@ -10,22 +10,22 @@ except socket.error, msg:
 
 print "Socket stworzony"
 
-host = 'wwww.onet.pl'
-port = 80
-try:
-    remote_ip = socket.gethostbyname( host )
-except socket.gaierror:
-    print "Can't resolv host"
-    sys.exit()
+host = '127.0.0.1'
+port = 8888
+# try:
+#     remote_ip = socket.gethostbyname( host )
+# except socket.gaierror:
+#     print "Can't resolv host"
+#     sys.exit()
 
-print "Ip address of " + host + " is " + remote_ip
+# print "Ip address of " + host + " is " + remote_ip
 
-s.connect((remote_ip, port))
+s.connect((host, port))
 
-print "Soccket connected to " + host + " on ip " + remote_ip
+# print "Soccket connected to " + host + " on ip " + remote_ip
 
 #Send some data to remote server
-message = "GET / HTTP/1.1\r\n\r\n"
+message = "GET down"
 
 try :
     #Set the whole string
