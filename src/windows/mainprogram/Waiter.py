@@ -1,11 +1,7 @@
 import Tkinter as Tk
-import RemoteMouseStart
 from multiprocessing import Process
-import socket
-import sys
-from thread import *
-import threading
-import Queue
+
+import RemoteMouseStart
 from settings import *
 
 
@@ -21,11 +17,9 @@ class Waiter(Tk.Tk):
         print self.screen_width
         print self.screen_height
 
-        thread_with_server = threading.Thread(target=self.create_server)
-        thread_with_server.start()
-        # start_new_thread(self.create_server(), None)
+        # thread_with_server = threading.Thread(target=self.create_server)
+        # thread_with_server.start()
 
-        # self.focus_force()
         self.overrideredirect(True)
         self.resizable(False, False)
         self.wm_attributes("-topmost", True)
@@ -65,48 +59,48 @@ class Waiter(Tk.Tk):
         self.y_previous = y
         print('Parametr x: {}, Parameter y: {}'.format(self.xdelta, self.ydelta))
 
-    def create_server(self):
-        HOST = ''
-        PORT = 8888
+    # def create_server(self):
+    #     HOST = ''
+    #     PORT = 8888
+    #
+    #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #     print "Socket has been created"
+    #
+    #     try:
+    #         s.bind((HOST, PORT))
+    #     except socket.error, msg:
+    #         print "Bind has failed. Error code: " + str(msg[0]) + " Message brzmi: " + msg[1]
+    #         sys.exit()
+    #
+    #     print "Bind has succeeded"
+    #
+    #     s.listen(10)
+    #     print "Socket waits for connections"
+    #
+    #     while 1:
+    #         conn, addr = s.accept()
+    #         print "Connected with: " + addr[0] + " : " + str(addr[1])
+    #         start_new_thread(self.client_thread,(conn, ))
+    #
+    #     s.close()
 
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print "Socket has been created"
-
-        try:
-            s.bind((HOST, PORT))
-        except socket.error, msg:
-            print "Bind has failed. Error code: " + str(msg[0]) + " Message brzmi: " + msg[1]
-            sys.exit()
-
-        print "Bind has succeeded"
-
-        s.listen(10)
-        print "Socket waits for connections"
-
-        while 1:
-            conn, addr = s.accept()
-            print "Connected with: " + addr[0] + " : " + str(addr[1])
-            start_new_thread(self.client_thread,(conn, ))
-
-        s.close()
-
-    def client_thread(self, conn):
-
-        conn.send("Welcome. You are connected")
-
-        # message = raw_input("Wyslij komende")
-        # global globalna
-        # globalna.put(message)
-
-        # self.q.put(message)
-
-        while globalna:
-            conn.send(globalna.get())
-            if not globalna:
-                break
-            # message = raw_input("Wyslij komende")
-            # globalna.put(message)
-        conn.close()
+    # def client_thread(self, conn):
+    #
+    #     conn.send("Welcome. You are connected")
+    #
+    #     # message = raw_input("Wyslij komende")
+    #     # global globalna
+    #     # globalna.put(message)
+    #
+    #     # self.q.put(message)
+    #
+    #     while globalna:
+    #         conn.send(globalna.get())
+    #         if not globalna:
+    #             break
+    #         # message = raw_input("Wyslij komende")
+    #         # globalna.put(message)
+    #     conn.close()
 
 def __run__ () :
 
