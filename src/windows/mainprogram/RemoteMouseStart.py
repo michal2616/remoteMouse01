@@ -1,6 +1,8 @@
 import Tkinter as Tk
-import Waiter
 from multiprocessing import Process
+
+import Waiter
+
 
 class TransparentWin (Tk.Tk) :
     ''' Transparent Tk Window Class '''
@@ -8,7 +10,8 @@ class TransparentWin (Tk.Tk) :
     def __init__ (self) :
 
         Tk.Tk.__init__(self)
-
+        global globalna
+        globalna.put("Transmission STARTED!")
         self.screen_width = self.winfo_vrootwidth()
         self.screen_height = self.winfo_vrootheight()
         self.width_to_destroy_transparantwin = self.screen_width - 2
@@ -53,16 +56,24 @@ class TransparentWin (Tk.Tk) :
         # print event
         if event.num == 5 or event.delta == -120:
             print("Scroll down")
+            globalna.put("Scroll down")
         if event.num == 4 or event.delta == 120:
             print("Scroll up")
+            globalna.put("Scroll up")
 
     def get_mouse_left_released(self, event):
+        global globalna
+        globalna.put("Left mouse button was released")
         print("Left mouse button was released")
 
     def get_mouse_left_hold(self, event):
+        global globalna
+        globalna.put("Left button is holded")
         print("Left button is holded")
 
     def get_mouse_left_click(self, event):
+        global globalna
+        globalna.put("Left click")
         print("Left click")
 
     def get_mouse_position_delta(self, event, x_previous, y_previous):
@@ -77,7 +88,9 @@ class TransparentWin (Tk.Tk) :
             p2 = Process(target=Waiter.Waiter().mainloop())
             p1.start()
             p2.start()
-            # self.destroy()
+
+        global globalna
+        globalna.put('Parametr x: {}, Parameter y: {}'.format(self.xdelta, self.ydelta))
         print('Parametr x: {}, Parameter y: {}'.format(self.xdelta, self.ydelta))
 
     def exit (self, event) :

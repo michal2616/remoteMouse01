@@ -4,12 +4,16 @@ from multiprocessing import Process
 import socket
 import sys
 from thread import *
+import threading
 import Queue
+from settings import *
+
 
 class Waiter(Tk.Tk):
 
     def __init__(self):
 
+        self.q = Queue.Queue()
         Tk.Tk.__init__(self)
 
         self.screen_width = self.winfo_vrootwidth()
@@ -17,7 +21,9 @@ class Waiter(Tk.Tk):
         print self.screen_width
         print self.screen_height
 
-        start_new_thread(self.create_server(), None)
+        thread_with_server = threading.Thread(target=self.create_server)
+        thread_with_server.start()
+        # start_new_thread(self.create_server(), None)
 
         # self.focus_force()
         self.overrideredirect(True)
@@ -85,18 +91,21 @@ class Waiter(Tk.Tk):
         s.close()
 
     def client_thread(self, conn):
+
         conn.send("Welcome. You are connected")
 
-        q = Queue.Queue()
-        message = raw_input("Wyslij komende")
-        q.put(message)
+        # message = raw_input("Wyslij komende")
+        # global globalna
+        # globalna.put(message)
 
-        while q:
-            conn.send(q.get())
-            if not q:
+        # self.q.put(message)
+
+        while globalna:
+            conn.send(globalna.get())
+            if not globalna:
                 break
-            message = raw_input("Wyslij komende")
-            q.put(message)
+            # message = raw_input("Wyslij komende")
+            # globalna.put(message)
         conn.close()
 
 def __run__ () :
