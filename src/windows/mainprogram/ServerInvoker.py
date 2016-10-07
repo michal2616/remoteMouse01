@@ -16,7 +16,7 @@ class ServerInvoker:
         # p1 run server that listen on port 8888
         # p2 run Waiter class that waits to start data transmission when mouse is on the left edge of the screen
         p1 = Process(target=thread_with_server.start())
-        p2 = Process(target=Waiter.Waiter().mainloop())
+        p2 = Process(target=Waiter.Waiter(500).mainloop())
 
     def create_server(self):
         HOST = ''
@@ -45,7 +45,7 @@ class ServerInvoker:
 
     def client_thread(self, conn):
 
-        conn.send("Welcome. You are connected")
+        # conn.send("Welcome. You are connected")
 
         while globalna:
             conn.send(globalna.get())

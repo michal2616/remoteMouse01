@@ -1,15 +1,15 @@
 import Tkinter as Tk
+from ctypes import *
 from multiprocessing import Process
 
 import RemoteMouseStart
-from settings import *
 
 
 class Waiter(Tk.Tk):
 
-    def __init__(self):
+    def __init__(self, mouse_height_starting_position):
 
-        self.q = Queue.Queue()
+        # self.q = Queue.Queue()
         Tk.Tk.__init__(self)
 
         self.screen_width = self.winfo_vrootwidth()
@@ -19,7 +19,7 @@ class Waiter(Tk.Tk):
 
         # thread_with_server = threading.Thread(target=self.create_server)
         # thread_with_server.start()
-
+        windll.user32.SetCursorPos(3, mouse_height_starting_position)
         self.overrideredirect(True)
         self.resizable(False, False)
         self.wm_attributes("-topmost", True)
@@ -43,12 +43,13 @@ class Waiter(Tk.Tk):
 
 
     def turn_on_transparentwin(self, event):
-        x, y = event.x, event.y
-        print('{}, {}'.format(x, y))
+        width, height = event.x, event.y
+        print('{}, {}'.format(width, height))
         p1 = Process(target=self.destroy())
-        p2 = Process(target=RemoteMouseStart.TransparentWin().mainloop())
+        p2 = Process(target=RemoteMouseStart.TransparentWin(width, height).mainloop())
         p1.start()
         p2.start()
+
 
     def get_mouse_position_delta(self, event, x_previous, y_previous):
         x, y = event.x, event.y
