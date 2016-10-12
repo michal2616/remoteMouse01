@@ -5,5 +5,6 @@ screenWidth, screenHeight = pyautogui.size()
 print screenHeight
 print screenWidth
 
-pyautogui.moveRel(-200, -200)
+# pyautogui.moveRel(-200, -200)
 # pyautogui.moveTo(500, 500, duration=2)
+pyautogui.press("k")
