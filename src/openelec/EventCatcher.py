@@ -1,6 +1,7 @@
 import Tkinter as Tk
+import time
 
-from StaticData import *
+import StaticData
 
 
 class EventCatcher (Tk.Tk) :
@@ -9,8 +10,9 @@ class EventCatcher (Tk.Tk) :
     def __init__ (self) :
 
         Tk.Tk.__init__(self)
-        global globalQueue
-        globalQueue.put("Transmission STARTED!")
+        time.sleep(3)
+        self.sending_queue = StaticData.globalQueue
+        # self.sending_queue.put("Transmission STARTED!")
         self.screen_width = self.winfo_vrootwidth()
         self.screen_height = self.winfo_vrootheight()
         self.width_to_destroy_event_catcher = self.screen_width - 2
@@ -25,10 +27,12 @@ class EventCatcher (Tk.Tk) :
 
         self.create_transparent_widget()
         # self.config(cursor="none")
-        self.q = Queue.Queue()
+        # self.q = Queue.Queue()
 
     def get_mouse_position(self, event):
         width, height = event.x, event.y
+        # self.sending_queue.put('Width: {},Height: {}'.format(width, height))
+        self.sending_queue.put(str(width) + ',' + str(height) + ";")
         print('Width: {},Height: {}'.format(width, height))
 
     def create_transparent_widget(self):
@@ -53,24 +57,23 @@ class EventCatcher (Tk.Tk) :
         # print event
         if event.num == 5 or event.delta == -120:
             print("Scroll down")
-            globalQueue.put("Scroll down")
+            self.sending_queue.put("Scroll down")
         if event.num == 4 or event.delta == 120:
             print("Scroll up")
-            globalQueue.put("Scroll up")
+            self.sending_queue.put("Scroll up")
 
     def get_mouse_left_released(self, event):
-        global globalQueue
-        globalQueue.put("Left mouse button was released")
+
+        self.sending_queue.put("Left mouse button was released")
         print("Left mouse button was released")
 
     def get_mouse_left_hold(self, event):
-        global globalQueue
-        globalQueue.put("Left button is holded")
+        self.sending_queue.put("Left button is holded")
         print("Left button is holded")
 
     def get_mouse_left_click(self, event):
-        global globalQueue
-        globalQueue.put("Left click")
+
+        self.sending_queue.put("Left click")
         print("Left click")
 
     def exit (self, event) :

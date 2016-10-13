@@ -42,7 +42,16 @@ class OpenElecServer:
             if not data: break
             # pyautogui.press("k")
             print data
-        conn.close()
+            list_with_width_coordinates = data.split(";")
+            print list_with_width_coordinates
+
+            seperate_coordinates = list_with_width_coordinates[-2].split(",")
+            print seperate_coordinates[0]
+            print seperate_coordinates[1]
+            print ""
+
+                    # pyautogui.moveRel(memberX_to_int, memberY_to_int)
+
 
 def __run__ () :
 

@@ -1,12 +1,13 @@
 import socket
 import sys
+import thread
 
-from StaticData import *
+import StaticData
 
 
 class OpenElecClient:
-
     def __init__(self):
+
         self.create_client()
 
     def create_client(self):
@@ -19,11 +20,18 @@ class OpenElecClient:
             print "Failed bo. Errorkod:" + str(msg[0]), "Error message : " + msg[1]
             sys.exit()
 
-        s.connect((host,port))
+        try:
+            s.connect((host,port))
+        except socket.error, msg:
+            print "ege szege dre. Serwer wlaczony? " + str(msg)
+            thread.exit_thread()
 
-        while globalQueue.get():
-            s.send(globalQueue.get())
-            if not globalQueue.get(): break
+        # global globalQueue
+
+        sending_queue = StaticData.globalQueue
+        while sending_queue:
+            s.send(sending_queue.get())
+            if not sending_queue: break
 
         s.close()
 
