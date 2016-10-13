@@ -5,7 +5,7 @@ from thread import *
 import pyautogui
 
 
-class OpenElecServer:
+class OpenElecServerSecond:
 
     def __init__(self):
         pyautogui.FAILSAFE = False
@@ -14,7 +14,7 @@ class OpenElecServer:
 
     def create_server(self):
         HOST = '192.168.1.222'
-        PORT = 8888
+        PORT = 8889
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print "Socket has been created"
@@ -42,28 +42,29 @@ class OpenElecServer:
         # conn.send("Welcome. You are connected")
 
         while 1:
-            data = conn.recv(1024)
-            width_ratio = 1
-            height_ratio = 1
+            data = conn.recv(8)
             if not data: break
-            # pyautogui.press("k")
-            # print data
-            list_with_width_coordinates = data.split(";")
-            # print list_with_width_coordinates
+            print data
+            splited_data = data.split(',')
+            print splited_data
 
-            seperate_coordinates = list_with_width_coordinates[-2].split(",")
-            width = int(seperate_coordinates[0]) * width_ratio
-            height = int(seperate_coordinates[1]) * height_ratio
-            # print width
-            # print height
-            # print ""
-            pyautogui.moveTo(width, height,0.1 ,pyautogui.linear(1))
-                    # pyautogui.moveRel(memberX_to_int, memberY_to_int)
+            for member in splited_data:
+                if member == "u":
+                    pyautogui.scroll(200)
+                if member == "l":
+                    pyautogui.click()
+                if member == "d":
+                    pyautogui.scroll(-200)
+
+            # pyautogui.press("k")
+
+
+            # pyautogui.moveRel(memberX_to_int, memberY_to_int)
 
 
 def __run__ () :
 
-    OpenElecServer()
+    OpenElecServerSecond()
 
 if __name__ == '__main__' :
     __run__()
