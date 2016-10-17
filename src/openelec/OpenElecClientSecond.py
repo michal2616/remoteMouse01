@@ -5,7 +5,7 @@ import thread
 import StaticData
 
 
-class OpenElecClient:
+class OpenElecClientSecond:
     def __init__(self):
 
         self.create_client()
@@ -13,7 +13,7 @@ class OpenElecClient:
     def create_client(self):
         # host = '127.0.0.1'
         host = '192.168.1.222'
-        port = 8888
+        port = 8889
         try:
             #create an AF_INET, STREAM socket (TCP)
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -29,16 +29,16 @@ class OpenElecClient:
 
         # global globalQueue
 
-        sending_queue = StaticData.globalQueue
-        while sending_queue:
-            s.send(sending_queue.get())
-            if not sending_queue: break
+        sending_queue_second = StaticData.globalQueueSecond
+        while sending_queue_second:
+            s.send(sending_queue_second.get())
+            if not sending_queue_second: break
 
         s.close()
 
 def __run__ () :
 
-    OpenElecClient()
+    OpenElecClientSecond()
 
 if __name__ == '__main__' :
     __run__()
